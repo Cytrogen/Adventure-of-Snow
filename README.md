@@ -1,2 +1,4 @@
-# Adventure-of-Snow
-Adventure of Snow (毛雪大冒险) is a console game based on random events.
+# 毛雪大冒险
+一个并没有毛雪、只是因为我叫毛雪的大冒险。
+
+**完全没在写**
