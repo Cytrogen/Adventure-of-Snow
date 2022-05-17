@@ -84,10 +84,10 @@ def initChara():
 
         # 当条件为真时循环
         gender = int(input("\n※ 你的性别是？[1为男/2为女]\n> "))
-        while gender <= 0 and gender >= 3:
+        while gender <= 1 and gender >= 2:
             gender = int(input("\n※ 请按照规则输入\n※ 你的性别是？[1为男/2为女]\n> "))
         sexori = int(input("\n※ 你的性取向是？[1为男/2为女]\n> "))
-        while sexori <= 0 and sexori >= 3:
+        while sexori <= 1 and sexori >= 2:
             sexori = int(input("\n※ 请按照规则输入\n※ 你的性取向是？[1为男/2为女]\n> "))
         print("\n※ 原来如此，生命……\n※ 现在，你的冒险即将开始……")
         chara['name'] = f'{name}'
