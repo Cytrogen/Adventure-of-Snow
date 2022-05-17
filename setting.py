@@ -7,24 +7,25 @@ from config import *
 # 角色数据读取
 chara = {}
 chara = json.load(open(charaPath, 'r', encoding='utf8'))
+system = json.load(open(welcomePath, 'r', encoding="UTF-8"))
 
 
 # 开始欢迎
 def welcome():
-    title = json.load(open(welcomePath, 'r', encoding="UTF-8")).get('title')
+    global system
+    titlePost = system["title"]
     hint = json.load(open(welcomePath, 'r', encoding="UTF-8")).get('hint')
-
-    titlePost = random.choice(title)
     hintPost = random.choice(hint)
 
     os.system('clear')
-    print(titlePost + '\n' + hintPost)
+    print(titlePost + '\n\n' + hintPost)
 
 
 # 测试用函数
 def resetChara():
     global chara
-    reset = input("> 要重置角色的所有数值吗？[Y / 其他键]：")
+    time.sleep(1)
+    reset = input("\n> 要重置角色的所有数值吗？[Y / 其他键]：")
     if reset == 'Y' or reset == 'y':
         chara['name'] = ''
         chara['gender'] = 0
@@ -101,6 +102,20 @@ def initChara():
         input("\n※ 回车以开始游戏 ※")
 
 
+# 开始游戏时人物属性随机生成
+# 总计点数30，随机划分给六个属性
+def attriGener():
+    global chara
+    totalPoints = 30
+    times = 6
+
+    while times >= 0 and totalPoints >= 0:
+
+
+        pass
+
+
+# 人物属性顶端UI
 def attriUI():
     global chara
     name = chara['name']
