@@ -95,24 +95,45 @@ def initChara():
         chara['sexori'] = sexori
         save()
         time.sleep(1)
-        input("\n※ 回车以开始游戏 ※")
+        input("\n※ 回车以分配能力值 ※")
     else:
         print("※ 欢迎回来，生命，你的冒险即将继续……")
         time.sleep(1)
-        input("\n※ 回车以开始游戏 ※")
+        input("\n※ 回车以展示当前的人物信息 ※")
 
 
 # 开始游戏时人物属性随机生成
-# 总计点数30，随机划分给六个属性
-def attriGener():
+# 总计点数12，随机划分给六个属性
+def attriGenera():
     global chara
-    totalPoints = 30
-    times = 6
-
-    while times >= 0 and totalPoints >= 0:
-
-
+    if chara['reset']:
+        part = 6
+        totalPoints = 12
+        print(part, totalPoints)
+        res_int = split_integer(totalPoints, part)
+    
+        attri = chara['attribute']
+        attri['str'] = res_int[0]
+        attri['agi'] = res_int[1]
+        attri['phy'] = res_int[2]
+        attri['int'] = res_int[3]
+        attri['per'] = res_int[4]
+        attri['cha'] = res_int[5]
+        save()
+    else:
         pass
+
+
+# 分配数值函数
+def split_integer(prototype, part):
+    board_set = set()
+    while len(board_set) < part - 1:
+        board_set.add(random.randrange(1, prototype))
+    board_list = list(board_set)
+    board_list.append(0)
+    board_list.append(prototype)
+    board_list.sort()
+    return [board_list[i + 1] - board_list[i] for i in range(part)]
 
 
 # 人物属性顶端UI
@@ -134,6 +155,29 @@ def attriUI():
             f'金币：{money}\n' +
             '—————————————————————————————')
 
+
+def attriReport():
+    global chara
+    if chara['reset']:
+        time.sleep(1)
+        print("※ 能力值已分配完毕")
+    time.sleep(1)
+    x = input("\n※ 是否播放简介？[Y/任何键]\n> ")
+    if x == 'Y' or x == 'y':
+        os.system("clear")
+        descrip()
+    else:
+        os.system("clear")
+
+
+def descrip():
+    global system
+    des = system['description']
+    attriUI()
+    print(des[0] + des[1] + des[2] + des[3] + des[4])
+    time.sleep(3)
+    input("\n※ 回车以正式开始游戏 ※")
+    os.system("clear")
 
 # 保存数据
 def save():
