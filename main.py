@@ -2,6 +2,7 @@
 
 
 from setting import *
+from event import *
 
 
 welcome()
@@ -9,5 +10,4 @@ welcome()
 resetChara()
 initChara()
 attriGenera()
-attriUI()
-attriReport()
+eventTree()
