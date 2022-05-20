@@ -99,7 +99,13 @@ def initChara():
     else:
         print("※ 欢迎回来，生命，你的冒险即将继续……")
         time.sleep(1)
-        input("\n※ 回车以展示当前的人物信息 ※")
+        x = input("\n※ 是否要展示当前的人物信息？[Y/任何键]\n> ")
+        if x == 'Y' or x == 'y':
+            attriUI()
+        else:
+            pass    
+        attriReport()
+
 
 
 # 开始游戏时人物属性随机生成
@@ -120,6 +126,8 @@ def attriGenera():
         attri['per'] = res_int[4]
         attri['cha'] = res_int[5]
         save()
+        attriUI()
+        attriReport()
     else:
         pass
 
@@ -179,7 +187,7 @@ def descrip():
     input("\n※ 回车以正式开始游戏 ※")
     os.system("clear")
 
-# 保存数据
+# 保存角色数据
 def save():
     with open(charaPath, 'w', encoding='utf8') as f:
         json.dump(chara, f, ensure_ascii=False, indent=4)
