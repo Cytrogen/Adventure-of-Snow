@@ -9,16 +9,6 @@ chara = json.load(open(charaPath, 'r', encoding='utf8'))
 story = json.load(open(storyPath, 'r', encoding="UTF-8"))
 
 
-# 目标：
-# 游戏分为 前期、中期、后期
-#
-# 魔王线：
-# 前期故事发生在森林外围，在第15个固定事件【哥布林洞穴】结束
-# 中期故事发生在森林内部，在第45个固定事件【魔王城】结束
-#       第25个事件将必定出现围绕着6个属性的路线选择
-# 后期故事发生在魔王城内部，在第90个固定事件【魔王讨伐】结束
-
-
 def eventTree():
     global chara, story
     number = 1
@@ -37,7 +27,7 @@ def eventTree():
         attriUI()
 
         # 该事件可以出现在第no个事件的随机范围内
-        print(f"\n※ 第{event['no']}个事件：\n")
+        print(f"※ 第{event['no']}个事件：\n")
 
         # storyTimes为该事件会有几次文本
         # 最初的事件介绍为1，完成选择后的文本为2，以此类推
@@ -59,7 +49,7 @@ def eventTree():
                 num = num + 1
             choice = int(input("※ 你的选择是？\n> "))
 
-            while choice <= 0 or choice >= choiceTimes:
+            while choice <= 0 or choice >= (choiceTimes + 1):
                 choice = int(input("\n※ 这不是一个有效的选择，请重试\n※ 你的选择是？\n> "))
             
             storyTimes = storyTimes + 1
