@@ -1,0 +1,78 @@
+{
+    "0": {
+        "no": 0,
+        "description": "没用的编号，就像我一样。"
+    },
+
+    "1": {
+        "no": 1,
+        "description": {
+            "1": {
+                "1Descript": "\n※ 喵呜！",
+                "choice": {
+                    "times": 3,
+                    "1": "\n\n1. 喵呜",
+                    "2": "2. 好",
+                    "3": "3. ok"
+                },
+                "is_continue": true
+            },
+
+            "2": {
+                "1Descript": "\n\n※ 你在喵呜个几把阿？",
+                "2Descript": "\n\n※ 好个什么阿！",
+                "3Descript": "\n\n※ OKAY！",
+                "is_continue": false
+            },
+
+            "gain": {
+                "attribute": {
+                    "str": 0,
+                    "agi": 0,
+                    "phy": 0,
+                    "per": 0,
+                    "int": 0,
+                    "cha": 100
+                },
+
+                "inventory": {}
+            }
+        }
+    },
+
+    "2": {
+        "no": 2,
+        "description": {
+            "1": {
+                "1Descript": "\n※ 傻逼！",
+                "choice": {
+                    "times": 3,
+                    "1": "\n\n1. 喵呜",
+                    "2": "2. 好",
+                    "3": "3. ok"
+                },
+                "is_continue": true
+            },
+
+            "2": {
+                "1Descript": "\n\n※ 你在喵呜个几把阿？",
+                "2Descript": "\n\n※ 好个什么阿！",
+                "3Descript": "\n\n※ OKAY！",
+                "is_continue": false
+            },
+
+            "gain": {
+                "attribute": {
+                    "str": 0,
+                    "agi": 0,
+                    "phy": 0,
+                    "per": 0,
+                    "int": 0,
+                    "cha": 100
+                },
+
+                "inventory": {}
+            }
+        }
+    }
+}
