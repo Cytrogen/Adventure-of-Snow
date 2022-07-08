@@ -4,69 +4,122 @@
 from setting import *
 
 
-chara = {}
-chara = json.load(open(charaPath, 'r', encoding='utf8'))
-story = json.load(open(storyPath, 'r', encoding="UTF-8"))
-
-
 def eventTree():
     global chara, story
     number = 1
 
     # number为循环次数，或事件总数，总计14次（前期）
     while number <= 14:
-        # 事先声明
-        event = story['0']
+        tag = random.randint(1, 7)
+        while story[f'{tag}']['no'] == number:
+            attriUI()
+            print(f"※ 第{story[f'{tag}']['no']}个事件：\n")
+            print(story[f"{tag}"]['description']['eventDescription'])
 
-        # 如果"no"非当前的事件数，则循环一直到匹配为止
-        while event['no'] != number:
-            # tag为事件编号
-            tag = random.randint(1, 2)
-            event = story[f'{tag}']
+            nextEvent = ifChoice(tag)
 
-        attriUI()
+            if 'null' in nextEvent:
+                print("\n※ 判断失败，你死了！ ※")
+                time.sleep(3)
+                input("\n※ 回车以接受自己死亡的命运 ※")
+                os._exit()
+            else:
+                print(nextEvent)
 
-        # 该事件可以出现在第no个事件的随机范围内
-        print(f"※ 第{event['no']}个事件：\n")
+            number = number + 1
+            time.sleep(1)
+            input("\n※ 回车以继续前进 ※")
+            os.system("clear")
 
-        # storyTimes为该事件会有几次文本
-        # 最初的事件介绍为1，完成选择后的文本为2，以此类推
-        #
-        # 如果该事件的storyTimes的is_continue为真，即这之后还有一次选择和文本，就循环一直到最后的storyTimes的is_continue为假
-        storyTimes = 1
-        event = event['description']
-        choice = 1
-        print(event[f'{storyTimes}'][f'{choice}Descript'])
 
-        while event[f'{storyTimes}']['is_continue']:
-            # choiceTimes为该事件的storyTimes的选项数量
-            choiceTimes = event[f'{storyTimes}']['choice']['times']
-            num = 1
+def ifChoice(tag):
+    global chara, story
 
-            # 循环choiceTimes次以展现出所有的有效选项
-            while num <= choiceTimes:
-                print(event[f'{storyTimes}']['choice'][f'{num}'])
+    if story[f"{tag}"]['description']['is_choice']:
+        num = 1
+        print('\n')
+
+        # 输出所有的选项
+        printAllChoices(num, tag)
+        
+        inputChoice = int(input("\n※ 你的选择是？\n> "))
+
+        # print("开始查错")
+        checkInputChoice(tag, inputChoice)
+
+        num = 1
+        # print("开始找inputChoice")
+        while num <= story[f'{tag}']['choice'][f'{inputChoice}']['requirement']['times']:
+            # print("开始找attriNeeded")
+            attriNeeded = story[f'{tag}']['choice'][f'{inputChoice}']['requirement'][f'{num}']['attributes']['name']
+                    
+            # print("开始检查属性数值")
+            if chara['attribute'][f'{attriNeeded}'] >= story[f'{tag}']['choice'][f'{inputChoice}']['requirement'][f'{num}']['attributes'][f'{attriNeeded}']:
+                # print("开始获取所需道具名")
+                invenNeeded = story[f'{tag}']['choice'][f'{inputChoice}']['requirement'][f'{num}']['inventory']['name']
+                    
+                # print("开始检查道具名")
+                if 'null' in invenNeeded:
+                    num = num + 100
+                else:
+                    charaInven = chara['inventory'][f'{invenNeeded}']
+
+                    # 获取所需的道具值
+                    invenVolume = story[f'{tag}']['choice'][f'{inputChoice}']['requirement'][f'{num}']['inventory']['volume']
+
+                    # print("开始检查道具数值")
+                    # 如果角色道具值大于所需道具值
+                    if charaInven >= invenVolume:
+                        # 获取下一个事件描述号码
+                        nextEvent = story[f'{tag}']['choice'][f'{inputChoice}']['requirement'][f'{num}']['if_true']["eventDescription"]
+                        num = num + 100
+                    else:
+                        num = num + 1
+            # 如果角色属性小于所需属性
+            else:
                 num = num + 1
-            choice = int(input("※ 你的选择是？\n> "))
+                # 如果没有直接死亡
+                if not story[f'{tag}']['choice'][f'{inputChoice}']['requirement'][f'{num}']['if_false']['killed']:
+                    nextEvent = story[f'{tag}']['choice'][f'{inputChoice}']['requirement'][f'{num}']['if_false']['eventDescription']
+                    # 开始惩罚
+                    punish(tag, num, inputChoice)
+                # 直接死亡
+                else:
+                    nextEvent = 'null'
+    else:
+        # 直接奖励
+        rewardNoChoice(tag)
+        nextEvent = story[f'{tag}']['description']['if_true']['eventDescription']
+        
+    return nextEvent
 
-            while choice <= 0 or choice >= (choiceTimes + 1):
-                choice = int(input("\n※ 这不是一个有效的选择，请重试\n※ 你的选择是？\n> "))
-            
-            storyTimes = storyTimes + 1
-            print(event[f'{storyTimes}'][f'{choice}Descript'])
 
-        # 事件完成后结算奖励
-        # 未完成
-        event = event['gain']
-        chara['attribute']['str'] += event['attribute']['str']
-        chara['attribute']['agi'] += event['attribute']['agi']
-        chara['attribute']['phy'] += event['attribute']['phy']
-        chara['attribute']['per'] += event['attribute']['per']
-        chara['attribute']['int'] += event['attribute']['int']
-        chara['attribute']['cha'] += event['attribute']['cha']
-        save()
+def printAllChoices(num, tag):
+    global story
+    while num <= story[f"{tag}"]['choice']['times']:
+        print(str(num) + '. ' + story[f"{tag}"]['choice'][f'{num}']['text'])
+        num += 1
 
-        number += 1
-        time.sleep(3)
-        input("\n※ 回车以继续前进 ※")
-        os.system("clear")
+
+def checkInputChoice(tag, inputChoice):
+    global story
+    while inputChoice <= 0 or inputChoice >= (story[f'{tag}']['choice']['times'] + 1):
+        inputChoice = int(input("\n※ 这不是一个有效的选择，请重试\n※ 你的选择是？\n> "))
+
+
+def rewardNoChoice(tag):
+    global story, chara
+    attrName = story[f'{tag}']['reward']['attributes']['attr']
+    chara['attribute'][f'{attrName}'] = chara['attribute'][f'{attrName}'] + story[f'{tag}']['reward']['attributes'][f'{attrName}']
+    inveName = story[f'{tag}']['reward']['inventory']['inve']
+    chara['inventory'][f'{inveName}'] = chara['inventory'][f'{inveName}'] + story[f'{tag}']['reward']['inventory'][f'{inveName}']
+    save()
+
+
+def punish(tag, inputChoice, num):
+    global story, chara
+    punishAttr = story[f'{tag}']['choice'][f'{inputChoice}']['requirement'][f'{num}']['if_false']['punishment']['attributes']['name']
+    punishInve = story[f'{tag}']['choice'][f'{inputChoice}']['requirement'][f'{num}']['if_false']['punishment']['inventory']['name']
+    chara['attribute'][f'{punishAttr}'] = chara['attribute'][f'{punishAttr}'] - story[f'{tag}']['choice'][f'{inputChoice}']['requirement'][f'{num}']['if_false']['punishment']['attributes'][f'{punishAttr}']
+    chara['inventory'][f'{punishInve}'] = chara['inventory'][f'{punishInve}'] - story[f'{tag}']['choice'][f'{inputChoice}']['requirement'][f'{num}']['if_false']['punishment']['inventory']['volume']
+    save()
