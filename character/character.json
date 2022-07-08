@@ -1,23 +1,25 @@
 {
-    "name": "",
-    "gender": 0,
-    "sexori": 0,
-    "money": 15,
+    "name": "老大",
+    "gender": 1,
+    "sexori": 1,
     "attribute": {
-        "str": 0,
-        "agi": 0,
-        "phy": 0,
-        "int": 0,
-        "per": 0,
-        "cha": 0
+        "str": 26,
+        "agi": 9,
+        "phy": 3,
+        "int": 12,
+        "per": 8,
+        "cha": 222
     },
     "inventory": {
-        "bottle": false,
-        "bottleWater": false,
-        "palacePass": false,
-        "bow": false,
+        "money": 15,
+        "wude": 1,
+        "bottle": 0,
+        "bottleWater": 0,
+        "palacePass": 0,
+        "bow": 0,
         "woodenBox": 0,
         "berry": 0
     },
-    "reset": true
+    "eventNumber": 1,
+    "reset": false
 }
