@@ -8,6 +8,7 @@ from config import *
 chara = {}
 chara = json.load(open(charaPath, 'r', encoding='utf8'))
 system = json.load(open(welcomePath, 'r', encoding="UTF-8"))
+story = json.load(open(storyPath, 'r', encoding="UTF-8"))
 
 
 # 开始欢迎
@@ -30,17 +31,18 @@ def resetChara():
         chara['name'] = ''
         chara['gender'] = 0
         chara['sexori'] = 0
-        chara['money'] = 15
         chara['attribute']['str'] = 0
         chara['attribute']['agi'] = 0
         chara['attribute']['phy'] = 0
         chara['attribute']['int'] = 0
         chara['attribute']['per'] = 0
         chara['attribute']['cha'] = 0
-        chara['inventory']['bottle'] = False
-        chara['inventory']['bottleWater'] = False
-        chara['inventory']['palacePass'] = False
-        chara['inventory']['bow'] = False
+        chara['inventory']['money'] = 15
+        chara['inventory']['wude'] = 1
+        chara['inventory']['bottle'] = 0
+        chara['inventory']['bottleWater'] = 0
+        chara['inventory']['palacePass'] = 0
+        chara['inventory']['bow'] = 0
         chara['inventory']['woodenBox'] = 0
         chara['inventory']['berry'] = 0
         chara['reset'] = True
@@ -154,7 +156,7 @@ def attriUI():
     int = chara['attribute']['int']
     per = chara['attribute']['per']
     cha = chara['attribute']['cha']
-    money = chara['money']
+    money = chara['inventory']['money']
 
     os.system("clear")
     print(name + '\n' + 
@@ -183,7 +185,7 @@ def descrip():
     des = system['description']
     attriUI()
     print(des[0] + des[1] + des[2] + des[3] + des[4])
-    time.sleep(3)
+    time.sleep(1)
     input("\n※ 回车以正式开始游戏 ※")
     os.system("clear")
 
