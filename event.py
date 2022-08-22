@@ -54,7 +54,7 @@ def ifChoice(tag):
             attriNeeded = story[f'{tag}']['choice'][f'{inputChoice}']['requirement'][f'{num}']['attributes']['name']
                     
             # print("开始检查属性数值")
-            if chara['attribute'][f'{attriNeeded}'] >= story[f'{tag}']['choice'][f'{inputChoice}']['requirement'][f'{num}']['attributes'][f'{attriNeeded}']:
+            if chara['attribute'][f'{attriNeeded}'] >= story[f'{tag}']['choice'][f'{inputChoice}']['requirement'][f'{num}']['attributes']['volume']:
                 # print("开始获取所需道具名")
                 invenNeeded = story[f'{tag}']['choice'][f'{inputChoice}']['requirement'][f'{num}']['inventory']['name']
                     
@@ -71,15 +71,22 @@ def ifChoice(tag):
                     # 如果角色道具值大于所需道具值
                     if charaInven >= invenVolume:
                         # 获取下一个事件描述号码
+                        print("\n\n")
                         nextEvent = story[f'{tag}']['choice'][f'{inputChoice}']['requirement'][f'{num}']['if_true']["eventDescription"]
+                        # 结算奖励
+                        # inputChoice = str(inputChoice)
+                        # num = str(num)
+                        rewardYesChoice(tag, num, inputChoice)
                         num = num + 100
                     else:
+                        # print("num + 1")
                         num = num + 1
             # 如果角色属性小于所需属性
             else:
                 num = num + 1
                 # 如果没有直接死亡
                 if not story[f'{tag}']['choice'][f'{inputChoice}']['requirement'][f'{num}']['if_false']['killed']:
+                    print("\n\n")
                     nextEvent = story[f'{tag}']['choice'][f'{inputChoice}']['requirement'][f'{num}']['if_false']['eventDescription']
                     # 开始惩罚
                     punish(tag, num, inputChoice)
@@ -110,16 +117,28 @@ def checkInputChoice(tag, inputChoice):
 def rewardNoChoice(tag):
     global story, chara
     attrName = story[f'{tag}']['reward']['attributes']['attr']
-    chara['attribute'][f'{attrName}'] = chara['attribute'][f'{attrName}'] + story[f'{tag}']['reward']['attributes'][f'{attrName}']
+    chara['attribute'][f'{attrName}'] = chara['attribute'][f'{attrName}'] + story[f'{tag}']['reward']['attributes']['volume']
+
     inveName = story[f'{tag}']['reward']['inventory']['inve']
-    chara['inventory'][f'{inveName}'] = chara['inventory'][f'{inveName}'] + story[f'{tag}']['reward']['inventory'][f'{inveName}']
+    chara['inventory'][f'{inveName}'] = chara['inventory'][f'{inveName}'] + story[f'{tag}']['reward']['inventory']['volume']
     save()
 
 
-def punish(tag, inputChoice, num):
+def rewardYesChoice(tag, num, inputChoice):
+    global story, chara
+    rewardAttr = story[f'{tag}']['choice'][f'{inputChoice}']['requirement'][f'{num}']['if_true']['reward']['attributes']['name']
+    rewardInve = story[f'{tag}']['choice'][f'{inputChoice}']['requirement'][f'{num}']['if_true']['reward']['inventory']['name']
+
+    chara['attribute'][f'{rewardAttr}'] = chara['attribute'][f'{rewardAttr}'] + story[f'{tag}']['choice'][f'{inputChoice}']['requirement'][f'{num}']['if_true']['reward']['attributes']['volume']
+    chara['inventory'][f'{rewardInve}'] = chara['inventory'][f'{rewardInve}'] - story[f'{tag}']['choice'][f'{inputChoice}']['requirement'][f'{num}']['if_true']['reward']['inventory']['volume']
+    save()
+
+
+def punish(tag, num, inputChoice):
     global story, chara
     punishAttr = story[f'{tag}']['choice'][f'{inputChoice}']['requirement'][f'{num}']['if_false']['punishment']['attributes']['name']
     punishInve = story[f'{tag}']['choice'][f'{inputChoice}']['requirement'][f'{num}']['if_false']['punishment']['inventory']['name']
-    chara['attribute'][f'{punishAttr}'] = chara['attribute'][f'{punishAttr}'] - story[f'{tag}']['choice'][f'{inputChoice}']['requirement'][f'{num}']['if_false']['punishment']['attributes'][f'{punishAttr}']
+
+    chara['attribute'][f'{punishAttr}'] = chara['attribute'][f'{punishAttr}'] - story[f'{tag}']['choice'][f'{inputChoice}']['requirement'][f'{num}']['if_false']['punishment']['attributes']['volume']
     chara['inventory'][f'{punishInve}'] = chara['inventory'][f'{punishInve}'] - story[f'{tag}']['choice'][f'{inputChoice}']['requirement'][f'{num}']['if_false']['punishment']['inventory']['volume']
     save()
