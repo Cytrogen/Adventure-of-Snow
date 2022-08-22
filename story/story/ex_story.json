@@ -20,11 +20,11 @@
         "reward": {
             "attributes": {
                 "attr": "str",
-                "str": 2
+                "volume": 2
             },
             "inventory": {
                 "inve": "money",
-                "money": 0
+                "volume": 0
             }
         }
     },
@@ -41,11 +41,11 @@
         "reward": {
             "attributes": {
                 "attr": "agi",
-                "agi": 2
+                "volume": 2
             },
             "inventory": {
                 "inve": "money",
-                "money": 0
+                "volume": 0
             }
         }
     },
@@ -62,11 +62,11 @@
         "reward": {
             "attributes": {
                 "attr": "phy",
-                "phy": 2
+                "volume": 2
             },
             "inventory": {
                 "inve": "money",
-                "money": 0
+                "volume": 0
             }
         }
     },
@@ -83,11 +83,11 @@
         "reward": {
             "attributes": {
                 "attr": "int",
-                "int": 2
+                "volume": 2
             },
             "inventory": {
                 "inve": "money",
-                "money": 0
+                "volume": 0
             }
         }
     },
@@ -104,11 +104,11 @@
         "reward": {
             "attributes": {
                 "attr": "per",
-                "per": 2
+                "volume": 2
             },
             "inventory": {
                 "inve": "money",
-                "money": 0
+                "volume": 0
             }
         }
     },
@@ -125,11 +125,11 @@
         "reward": {
             "attributes": {
                 "attr": "cha",
-                "cha": 2
+                "volume": 2
             },
             "inventory": {
                 "inve": "money",
-                "money": 0
+                "volume": 0
             }
         }
     },
@@ -152,7 +152,7 @@
                     "1": {
                         "attributes": {
                             "name": "cha",
-                            "cha": 5
+                            "volume": 5
                         },
                         "inventory": {
                             "name": "money",
@@ -163,11 +163,11 @@
                             "reward": {
                                 "attributes": {
                                     "name": "per",
-                                    "per": 3
+                                    "volume": 3
                                 },
                                 "inventory": {
                                     "name": "money",
-                                    "money": 0
+                                    "volume": 0
                                 }
                             }
                         },
@@ -177,7 +177,7 @@
                             "punishment": {
                                 "attributes": {
                                     "name": "str",
-                                    "str": 0
+                                    "volume": 0
                                 },
                                 "inventory": {
                                     "name": "money",
@@ -195,7 +195,7 @@
                     "1": {
                         "attributes": {
                             "name": "str",
-                            "str": 3
+                            "volume": 3
                         },
                         "inventory": {
                             "name": "money",
@@ -206,11 +206,11 @@
                             "reward": {
                                 "attributes": {
                                     "name": "str",
-                                    "str": 1
+                                    "volume": 1
                                 },
                                 "inventory": {
                                     "name": "wude",
-                                    "wude": -1
+                                    "volume": -1
                                 }
                             }
                         },
@@ -220,7 +220,7 @@
                             "punishment": {
                                 "attributes": {
                                     "name": "str",
-                                    "str": 0
+                                    "volume": 0
                                 },
                                 "inventory": {
                                     "name": "wude",
@@ -238,7 +238,7 @@
                     "1": {
                         "attributes": {
                             "name": "str",
-                            "str": 0
+                            "volume": 0
                         },
                         "inventory": {
                             "name": "money",
@@ -249,11 +249,11 @@
                             "reward": {
                                 "attributes": {
                                     "name": "int",
-                                    "int": 2
+                                    "volume": 2
                                 },
                                 "inventory": {
                                     "name": "money",
-                                    "wude": 0
+                                    "volume": 0
                                 }
                             }
                         },
@@ -263,7 +263,7 @@
                             "punishment": {
                                 "attributes": {
                                     "name": "str",
-                                    "str": 0
+                                    "volume": 0
                                 },
                                 "inventory": {
                                     "name": "money",
@@ -279,11 +279,11 @@
         "reward": {
             "attributes": {
                 "attr": "cha",
-                "cha": 2
+                "volume": 2
             },
             "inventory": {
                 "inve": "money",
-                "money": 0
+                "volume": 0
             }
         }
     }
